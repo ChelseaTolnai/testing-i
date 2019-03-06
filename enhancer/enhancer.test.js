@@ -11,13 +11,14 @@ describe('enhancer.js', () => {
                 enhancement: 0,                
             }
             expect(repair(item1)).toEqual(expected);
-            expect(repair(failItem1)).toBeNull();
-            expect(repair(failItem2)).toBeNull();
-            expect(repair()).toBeNull();
-            expect(repair(['array'])).toBeNull();
-            expect(repair(NaN)).toBeNull();
-            expect(repair(undefined)).toBeNull();
-            expect(repair(null)).toBeNull();
+            expect(() => repair(failItem1)).toThrow();
+            expect(() => repair(failItem2)).toThrow();
+            expect(() => repair()).toThrow();
+            expect(() => repair(['array'])).toThrow();
+            expect(() => repair(NaN)).toThrow();
+            expect(() => repair(undefined)).toThrow();
+            expect(() => repair(null)).toThrow();
+
         })
     })
 
@@ -47,14 +48,14 @@ describe('enhancer.js', () => {
         })
 
         it('fails invalid item arguments', () => {
-            expect(success(failItem1)).toBeNull();
-            expect(success(failItem2)).toBeNull();
-            expect(success(failItem3)).toBeNull();
-            expect(success()).toBeNull();
-            expect(success(['array'])).toBeNull();
-            expect(success(NaN)).toBeNull();
-            expect(success(undefined)).toBeNull();
-            expect(success(null)).toBeNull();
+            expect(() => success(failItem1)).toThrow();
+            expect(() => success(failItem2)).toThrow();
+            expect(() => success(failItem3)).toThrow();
+            expect(() => success()).toThrow();
+            expect(() => success(['array'])).toThrow();
+            expect(() => success(NaN)).toThrow();
+            expect(() => success(undefined)).toThrow();
+            expect(() => success(null)).toThrow();
         })
     })
 
@@ -95,6 +96,6 @@ const failItem2 = {
 const failItem3 = {
     name: 'name',
     type: 'armor',
-    durability: 100,
-    enhancement: 21,
+    durability: 5,
+    enhancement: 14,
 };

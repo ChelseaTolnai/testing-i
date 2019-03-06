@@ -22,60 +22,70 @@ function objCheck(item) {
             }
         }
     } 
-    return false   
+    throw new Error('Invalid item object as argument.');
 }
 
 function repair(item) {
     if (objCheck(item) === true) {
+        let { durability } = item;
+        switch (durability < 100) {
+            case(true):
+                durability = 100;
+                break;
+            default:
+                throw new Error('Item does not need to be repaired.');
+        }
         return {
-        ...item,
-        durability: 100,
+            ...item,
+            durability,
         }
     } 
-    return null
 };
 
 function success(item) {
     if (objCheck(item) === true){
       let {name, enhancement} = item;
-      switch (true) {
-        case(enhancement === 0):
-          enhancement++;
-          name = `[+${enhancement}] ${name}`;
-          break;
-        case(enhancement < 15):
-          enhancement++;
-          name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
-          break;
-        case(enhancement < 20):
-          enhancement++;
-          const enhanceLevels = {
-            16: "PRI",
-            17: "DUO",
-            18: "TRI",
-            19: "TET",
-            20: "PEN"
-          };
-          name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
-          break;
-        case(enhancement === 20):
-          break;
-      }
-      return {
-        ...item,
-        enhancement,
-        name,
-      }
+        switch (true) {
+            case(enhancement === 0):
+                enhancement++;
+                name = `[+${enhancement}] ${name}`;
+                break;
+            case(enhancement < 15):
+                enhancement++;
+                name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
+                break;
+            case(enhancement < 20):
+                enhancement++;
+                name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
+                break;
+            case(enhancement === 20):
+                break;
+        }
+        return {
+            ...item,
+            enhancement,
+            name,
+        }
     }
-    return null
 }
 
 function fail(item) {
-    if (objCheck(item) === true) {
+    if (objCheck(item) === true){
+        let {name, durability, enhancement} = item;
+        
         return {
-        ...item,
-        durability: 100,
+            ...item,
+            enhancement,
+            name,
+            durability,
         }
-    } 
-    return null
+    }
+};
+
+const enhanceLevels = {
+    16: "PRI",
+    17: "DUO",
+    18: "TRI",
+    19: "TET",
+    20: "PEN"
 };
