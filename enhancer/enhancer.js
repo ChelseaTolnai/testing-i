@@ -6,12 +6,12 @@ module.exports = {
 function objCheck(item) {
     if (typeof item === 'object') {
         const objCheck =  Object.prototype.toString.call(item).slice(8, -1);
-        if (objCheck === 'Object' ){
+        if (objCheck === 'Object' ) {
             let { name, type, durability, enhancement } = item
             if (typeof name === 'string' 
              && typeof type === 'string' && (type === 'armor' || type === 'weapon')
-             && typeof durability === 'number' 
-             && typeof enhancement === 'number'
+             && typeof durability === 'number' && (durability <= 100)
+             && typeof enhancement === 'number' && (0 <= enhancement && enhancement <= 20)
             ) {
                 return true
             }
@@ -31,8 +31,10 @@ function repair(item) {
 };
 
 function success(item) {
-    if (objCheck(item) === true){
-        return true
+    if (objCheck(item) === true) {
+        return {
+        ...item,
+        }
     }
     return null
 }
