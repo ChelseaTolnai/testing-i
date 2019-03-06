@@ -1,6 +1,7 @@
 module.exports = {
     repair,
-    success
+    success,
+    fail
 }
 
 function objCheck(item) {
@@ -73,8 +74,24 @@ function success(item) {
 
 function fail(item) {
     if (objCheck(item) === true){
-        let {name, durability, enhancement} = item;
-
+        let {name, type, durability, enhancement} = item;
+        switch (true) {
+            case(type === 'armor' && enhancement <= 5):
+                throw new Error('Enchancing an armor up to 5 cannot fail');
+            case(type === 'weapon' && enhancement <= 7):
+                throw new Error('Enchancing a weapon up to 7 cannot fail');
+            case(enhancement <= 14):
+                durability -= 5;
+                break;
+            case(14 < enhancement && enhancement <= 16):
+                durability -= 10;
+                break
+            case(enhancement > 16):
+                durability -= 10;
+                enhancement--;
+                name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
+                break;
+        }
         return {
             ...item,
             enhancement,

@@ -1,4 +1,4 @@
-const { repair, success } = require('./enhancer');
+const { repair, success, fail } = require('./enhancer');
 
 describe('enhancer.js', () => {
 
@@ -50,6 +50,43 @@ describe('enhancer.js', () => {
             expect(() => success(NaN)).toThrow();
             expect(() => success(undefined)).toThrow();
             expect(() => success(null)).toThrow();
+        })
+    })
+
+    describe('fail()', () => {
+        it('enhances fail and update accordingly', () => {
+            const expected1 = {
+                name: 'Shield',
+                type: 'armor',
+                durability: 38,
+                enhancement: 0,
+            };
+            const expected2 = {
+                name: '[TET] Sword',
+                type: 'weapon',
+                durability: 90,
+                enhancement: 19,
+            };
+            const expected3 = {
+                name: '[+15] Knife',
+                type: 'weapon',
+                durability: 40,
+                enhancement: 15,
+            };
+            expect(() => fail(item1)).toThrow();
+            expect(fail(item2)).toEqual(expected2);
+            expect(fail(item3)).toEqual(expected3);
+        })
+
+        it('fails invalid item arguments', () => {
+            expect(() => fail(failItem1)).toThrow();
+            expect(() => fail(failItem2)).toThrow();
+            expect(() => fail(failItem3)).toThrow();
+            expect(() => fail()).toThrow();
+            expect(() => fail(['array'])).toThrow();
+            expect(() => fail(NaN)).toThrow();
+            expect(() => fail(undefined)).toThrow();
+            expect(() => fail(null)).toThrow();
         })
     })
 
