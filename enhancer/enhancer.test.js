@@ -39,6 +39,8 @@ describe('enhancer.js', () => {
             expect(success(item1)).toEqual(expected1);
             expect(() => success(item2)).toThrow();
             expect(success(item3)).toEqual(expected3);
+            expect(() => success(item4)).toThrow();
+            expect(() => success(item5)).toThrow();
         })
 
         it('fails invalid item arguments', () => {
@@ -111,6 +113,18 @@ const item3 = {
     type: 'weapon',
     durability: 50,
     enhancement: 15,
+};
+const item4 = {
+    name: '[TET] Knife',
+    type: 'weapon',
+    durability: 9,
+    enhancement: 19,
+};
+const item5 = {
+    name: 'Knife',
+    type: 'weapon',
+    durability: 24,
+    enhancement: 0,
 };
 
 const failItem1 = {

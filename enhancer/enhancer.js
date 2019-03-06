@@ -45,21 +45,22 @@ function repair(item) {
 
 function success(item) {
     if (objCheck(item) === true){
-      let {name, enhancement} = item;
-        switch (enhancement < 20) {
-            case(true):
+      let {name, durability, enhancement} = item;
+        switch (true) {
+            case(enhancement === 0):
+                if (durability < 25) {throw new Error('Item cannot be enhanced if durability is below 25.');}
                 enhancement++;
-                switch (true) {
-                    case(enhancement === 1):
-                        name = `[+${enhancement}] ${name}`;
-                        break;
-                    case(enhancement <= 15):
-                        name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
-                        break;
-                    case(enhancement <= 20):
-                        name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
-                        break;
-                }
+                name = `[+${enhancement}] ${name}`;
+                break;
+            case(enhancement < 15):
+                if (durability < 25) {throw new Error('Item cannot be enhanced if durability is below 25.');}
+                enhancement++;
+                name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
+                break;
+            case(enhancement < 20):
+                if (durability < 10) {throw new Error('Item cannot be enhanced if durability is below 10.');}
+                enhancement++;
+                name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
                 break;
             default:
                 throw new Error('Item is at top enhancement level.');
