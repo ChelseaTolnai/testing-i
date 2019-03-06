@@ -45,21 +45,23 @@ function repair(item) {
 function success(item) {
     if (objCheck(item) === true){
       let {name, enhancement} = item;
-        switch (true) {
-            case(enhancement === 0):
+        switch (enhancement < 20) {
+            case(true):
                 enhancement++;
-                name = `[+${enhancement}] ${name}`;
+                switch (true) {
+                    case(enhancement === 1):
+                        name = `[+${enhancement}] ${name}`;
+                        break;
+                    case(enhancement <= 15):
+                        name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
+                        break;
+                    case(enhancement <= 20):
+                        name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
+                        break;
+                }
                 break;
-            case(enhancement < 15):
-                enhancement++;
-                name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
-                break;
-            case(enhancement < 20):
-                enhancement++;
-                name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
-                break;
-            case(enhancement === 20):
-                break;
+            default:
+                throw new Error('Item is at top enhancement level.');
         }
         return {
             ...item,
@@ -72,7 +74,7 @@ function success(item) {
 function fail(item) {
     if (objCheck(item) === true){
         let {name, durability, enhancement} = item;
-        
+
         return {
             ...item,
             enhancement,

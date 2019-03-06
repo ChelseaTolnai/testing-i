@@ -23,18 +23,12 @@ describe('enhancer.js', () => {
     })
 
     describe('success()', () => {
-        it('increases item enhancement and updates name', () => {
+        it('increases item enhancement and updates name if item can enhance anymore', () => {
             const expected1 = {
                 name: '[+1] Shield',
                 type: 'armor',
                 durability: 43,
                 enhancement: 1,
-            };
-            const expected2 = {
-                name: '[PEN] Sword',
-                type: 'weapon',
-                durability: 100,
-                enhancement: 20,
             };
             const expected3 = {
                 name: '[PRI] Knife',
@@ -43,7 +37,7 @@ describe('enhancer.js', () => {
                 enhancement: 16,
             };
             expect(success(item1)).toEqual(expected1);
-            expect(success(item2)).toEqual(expected2);
+            expect(() => success(item2)).toThrow();
             expect(success(item3)).toEqual(expected3);
         })
 
