@@ -3,27 +3,37 @@ const { repair } = require('./enhancer');
 describe('enhancer.js', () => {
     describe('repair()', () => {
         it('repairs item only if item is true object with required key value pairs', () => {
-            const item = {
-                name: 'name',
-                type: 'type',
-                durability: 43,
-                enhancement: 0,
-            };
-            const item2 = {
-                name: [],
-                type: [],
-                durability: '43',
-            };
             const expected = {
                 name: 'name',
-                type: 'type',
+                type: 'armor',
                 durability: 100,
                 enhancement: 0,                
             }
             expect(repair(item)).toEqual(expected);
             expect(repair(item2)).toBeNull();
+            expect(repair(item3)).toBeNull();
             expect(repair()).toBeNull();
             expect(repair(['array'])).toBeNull();
         })
     })
 })
+
+
+// Testing items
+const item = {
+    name: 'name',
+    type: 'armor',
+    durability: 43,
+    enhancement: 0,
+};
+const item2 = {
+    name: [],
+    type: [],
+    durability: '43',
+};
+const item3 = {
+    name: 'name',
+    type: 'magic',
+    durability: 43,
+    enhancement: 0,
+};

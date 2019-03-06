@@ -3,12 +3,12 @@ module.exports = {
 }
 
 function repair(item) {
-    if (item && typeof item === 'object') {
+    if (typeof item === 'object') {
         const objCheck =  Object.prototype.toString.call(item).slice(8, -1);
         if (objCheck === 'Object' ){
             let { name, type, durability, enhancement } = item
             if (typeof name === 'string' 
-             && typeof type === 'string' 
+             && typeof type === 'string' && (type === 'armor' || type === 'weapon')
              && typeof durability === 'number' 
              && typeof enhancement === 'number'
             ) {
@@ -21,3 +21,4 @@ function repair(item) {
     } 
     return null
 };
+
