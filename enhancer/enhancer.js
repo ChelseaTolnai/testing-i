@@ -1,8 +1,9 @@
 module.exports = {
-    repair
+    repair,
+    success
 }
 
-function repair(item) {
+function objCheck(item) {
     if (typeof item === 'object') {
         const objCheck =  Object.prototype.toString.call(item).slice(8, -1);
         if (objCheck === 'Object' ){
@@ -12,13 +13,26 @@ function repair(item) {
              && typeof durability === 'number' 
              && typeof enhancement === 'number'
             ) {
-                return {
-                ...item,
-                durability: 100,
-                }
+                return true
             }
+        }
+    } 
+    return false   
+}
+
+function repair(item) {
+    if (objCheck(item) === true) {
+        return {
+        ...item,
+        durability: 100,
         }
     } 
     return null
 };
 
+function success(item) {
+    if (objCheck(item) === true){
+        return true
+    }
+    return null
+}

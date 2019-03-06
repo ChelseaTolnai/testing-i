@@ -1,6 +1,7 @@
 const { repair } = require('./enhancer');
 
 describe('enhancer.js', () => {
+
     describe('repair()', () => {
         it('repairs item only if item is true object with required key value pairs', () => {
             const expected = {
@@ -14,8 +15,12 @@ describe('enhancer.js', () => {
             expect(repair(item3)).toBeNull();
             expect(repair()).toBeNull();
             expect(repair(['array'])).toBeNull();
+            expect(repair(NaN)).toBeNull();
+            expect(repair(undefined)).toBeNull();
+            expect(repair(null)).toBeNull();
         })
     })
+
 })
 
 
