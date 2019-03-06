@@ -31,10 +31,36 @@ function repair(item) {
 };
 
 function success(item) {
-    if (objCheck(item) === true) {
-        return {
+    if (objCheck(item) === true){
+      let {name, enhancement} = item;
+      switch (true) {
+        case(enhancement === 0):
+          enhancement = enhancement + 1;
+          name = `[+${enhancement}] ${name}`;
+          break;
+        case(enhancement < 15):
+          enhancement = enhancement + 1;
+          name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
+          break;
+        case(enhancement < 20):
+          enhancement = enhancement + 1;
+          const enhanceLevels = {
+            16: "PRI",
+            17: "DUO",
+            18: "TRI",
+            19: "TET",
+            20: "PEN"
+          };
+          name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[${enhanceLevels[enhancement]}]`);
+          break;
+        case(enhancement === 20):
+          break;
+      }
+      return {
         ...item,
-        }
+        enhancement,
+        name,
+      }
     }
     return null
-}
+  }
