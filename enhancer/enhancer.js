@@ -13,7 +13,12 @@ function objCheck(item) {
              && typeof durability === 'number' && (durability <= 100)
              && typeof enhancement === 'number' && (0 <= enhancement && enhancement <= 20)
             ) {
-                return true
+                if (((0 <= enhancement && enhancement <= 14) && durability >= 20) 
+                 || ((15 <= enhancement && enhancement <= 19) && durability >= 0)
+                 || (enhancement === 20)
+                ) {
+                    return true
+                }
             }
         }
     } 
@@ -35,15 +40,15 @@ function success(item) {
       let {name, enhancement} = item;
       switch (true) {
         case(enhancement === 0):
-          enhancement = enhancement + 1;
+          enhancement++;
           name = `[+${enhancement}] ${name}`;
           break;
         case(enhancement < 15):
-          enhancement = enhancement + 1;
+          enhancement++;
           name = name.replace(`${name.match(/^\[.*\]/g)[0]}`, `[+${enhancement}]`);
           break;
         case(enhancement < 20):
-          enhancement = enhancement + 1;
+          enhancement++;
           const enhanceLevels = {
             16: "PRI",
             17: "DUO",
@@ -63,4 +68,14 @@ function success(item) {
       }
     }
     return null
-  }
+}
+
+function fail(item) {
+    if (objCheck(item) === true) {
+        return {
+        ...item,
+        durability: 100,
+        }
+    } 
+    return null
+};
